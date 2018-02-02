@@ -1,0 +1,18 @@
+{
+    "Comment": "Update record to reflect new IP address of chat app",
+    "Changes": [
+        {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "chatapp.grantorchard.com.",
+                "Type": "A",
+                "TTL": 300,
+                "ResourceRecords": [
+                    {
+                        "Value": "127.0.0.1"
+                    }
+                ]
+            }
+        }
+    ]
+}
