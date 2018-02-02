@@ -8,7 +8,7 @@ else
 fi 
 echo "IP to update: $IP"
 
-HOSTED_ZONE_ID=$( aws route53 list-hosted-zones-by-name | grep -B 1 -e "lambrospetrou.com" | sed 's/.*hostedzone\/\([A-Za-z0-9]*\)\".*/\1/' | head -n 1 )
+HOSTED_ZONE_ID=$( aws route53 list-hosted-zones-by-name | grep -B 1 -e "grantorchard.com" | sed 's/.*hostedzone\/\([A-Za-z0-9]*\)\".*/\1/' | head -n 1 )
 echo "Hosted zone being modified: $HOSTED_ZONE_ID"
 
 INPUT_JSON=$( cat ./update-route53-A.json | sed "s/127\.0\.0\.1/$IP/" )
