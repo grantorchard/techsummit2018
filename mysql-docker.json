@@ -1,0 +1,39 @@
+{
+    "min_packer_version": "0.12.0",
+    "variables": {
+        "login_username": "grant",
+        "login_password": "VMware1!",
+        "login_server": "https://ec2-54-186-208-72.us-west-2.compute.amazonaws.com"
+    },
+    "builders": [{
+      "type": "docker",
+      "image": "ubuntu:16.04",
+      "commit": true,
+      "changes": [
+          "EXPOSE 3306",
+          "CMD sudo DEBIAN_FRONTEND=noninteractive apt-get update -y",  
+          "CMD sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server",
+          "CMD sudo mysql -e \"CREATE DATABASE lychee;\"",
+          "CMD sudo mysql -e \"CREATE USER lychee@'%' IDENTIFIED BY 'lychee';\"",
+          "CMD sudo mysql -e \"GRANT ALL PRIVILEGES ON lychee.* TO lychee@'%';\"",
+          "CMD sudo mysql -e \"FLUSH PRIVILEGES;\"",
+          "CMD sudo sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf",
+          "LABEL version=1.0"
+      ]
+    }],
+    "post-processors": [
+        [
+        {
+            "type": "docker-tag",
+            "repository": "ts2018/mysql",
+            "tag": "latest"
+        },
+        {
+            "type": "docker-push",
+            "login_username": "{{user `login_username`}}",
+            "login_password": "{{user `login_password`}}",
+            "login_server": "{{user `login_server`}}"
+        }
+        ]
+    ]
+}
