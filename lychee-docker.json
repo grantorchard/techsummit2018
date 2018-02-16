@@ -4,21 +4,20 @@
         "login_username": "grant",
         "login_password": "VMware1!",
         "login_server": "harbor.wwko2018.com",
-        "repository": "wwko2018/mysql"
+        "repository": "wwko2018/lychee"
     },
     "builders": [{
       "type": "docker",
       "image": "ubuntu:16.04",
       "commit": true,
       "changes": [
-          "EXPOSE 3306",
+          "EXPOSE 80",
           "CMD sudo DEBIAN_FRONTEND=noninteractive apt-get update -y",  
-          "CMD sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server",
-          "CMD sudo mysql -e \"CREATE DATABASE lychee;\"",
-          "CMD sudo mysql -e \"CREATE USER lychee@'%' IDENTIFIED BY 'lychee';\"",
-          "CMD sudo mysql -e \"GRANT ALL PRIVILEGES ON lychee.* TO lychee@'%';\"",
-          "CMD sudo mysql -e \"FLUSH PRIVILEGES;\"",
-          "CMD sudo sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf",
+          "CMD sudo DEBIAN_FRONTEND=noninteractive apt-get install -y dialog apt-utils git apache2 php libapache2-mod-php php-mysql php-mbstring php-gd php-zip php-json php-fpm php-memcached php-pear php-xml php-mbstring php-xdebug php-intl php-curl",
+          "CMD sudo DEBIAN_FRONTEND=noninteractive phpenmod session mysqli exif mbstring gd json zip",
+          "CMD git clone https://github.com/electerious/Lychee.git /tmp/lychee",
+          "CMD sudo mv -f /tmp/lychee/* /var/www/html",
+          "CMD sudo chmod -R 777 /var/www/html/uploads/ /var/www/html/data/",
           "LABEL version=1.0"
       ]
     }],
@@ -26,7 +25,7 @@
         [
         {
             "type": "docker-tag",
-            "repository": "{{user `login_server`}}/{{user `repository}}",
+            "repository": "{{user `login_server`}}/{{user `repository`}}",
             "tag": "latest"
         },
         {
