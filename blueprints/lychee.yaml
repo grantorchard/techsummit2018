@@ -2,7 +2,7 @@ resources:
   lb-01a:
     type: Compute.LoadBalancer
     properties:
-      name: ''
+      name: 'wwko2018'
       public-dns: lychee.wwko2018.com
       network: '${Network_1.name}'
       instances: '${lychee.id}'

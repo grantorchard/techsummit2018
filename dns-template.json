@@ -4,7 +4,7 @@
         {
             "Action": "UPSERT",
             "ResourceRecordSet": {
-                "Name": "chatapp.grantorchard.com.",
+                "Name": "lychee.wwko2018.com.",
                 "Type": "A",
                 "TTL": 300,
                 "ResourceRecords": [
