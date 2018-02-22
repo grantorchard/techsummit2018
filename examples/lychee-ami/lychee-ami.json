@@ -45,7 +45,7 @@
   },
   {
     "type": "file",
-    "source": "config.php",
+    "source": "{{template_dir}}/config.php",
     "destination": "/var/www/html/data/"
   },
   {
@@ -53,6 +53,12 @@
     "inline": [
       "sudo /etc/init.d/apache2 restart"
     ]
-  }
-]
+  }],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
+  ]
 }
