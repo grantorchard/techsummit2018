@@ -45,7 +45,7 @@
   },
   {
     "type": "file",
-    "source": "{{template_dir}}/config.php",
+    "source": "{{template_dir}}/files/config.php",
     "destination": "/var/www/html/data/"
   },
   {

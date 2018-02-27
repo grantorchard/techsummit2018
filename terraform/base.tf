@@ -121,3 +121,23 @@ resource "aws_route53_record" "pks" {
    ttl = "300"
    records = ["${aws_eip.base.public_ip}"]
 }
+
+resource "aws_elb" "pks" {
+	name = "pks-lb"
+	availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+	
+	listener {
+    instance_port      = 8443
+    instance_protocol  = "https"
+    lb_port            = 8443
+    lb_protocol        = "https"
+	ssl_certificate_id = "arn:aws:acm:us-west-2:495078824317:certificate/d06af351-75f1-43cb-b466-9462c4a57670"
+	}
+
+	instances                   = ["${aws_instance.base.id}"]
+    cross_zone_load_balancing   = false
+    idle_timeout                = 400
+    connection_draining         = true
+    connection_draining_timeout = 400
+
+}
