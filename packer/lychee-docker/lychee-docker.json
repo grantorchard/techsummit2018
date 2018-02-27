@@ -1,0 +1,56 @@
+{
+    "min_packer_version": "0.12.0",
+    "variables": {
+        "login_username": "{{env `docker_login`}}",
+        "login_password": "{{env `docker_password`}}",
+        "login_server": "harbor.wwko2018.com",
+        "repository": "wwko2018/lychee"
+    },
+    "builders": [{
+      "type": "docker",
+      "image": "nimmis/apache-php7:latest",
+      "commit": true,
+      "changes": [
+          "ENV DEBIAN_FRONTEND noninteractive",
+
+      ]
+    }],
+    
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+          "DEBIAN_FRONTEND=noninteractive apt-get update -y",  
+          "DEBIAN_FRONTEND=noninteractive apt-get install -y dialog apt-utils git awscli libapache2-mod-php php-mysql php-mbstring php-gd php-zip php-json php-fpm php-memcached php-pear php-xml php-mbstring php-xdebug php-intl php-curl",
+          "DEBIAN_FRONTEND=noninteractive phpenmod mysqli exif mbstring gd json zip",
+          "git clone https://github.com/electerious/Lychee.git /tmp/lychee",
+          "mv -f /tmp/lychee/* /var/www/html",
+          "chmod -R 777 /var/www/html/uploads/ /var/www/html/data/"
+        ]
+      },
+      {
+        "type": "file",
+        "source": "config.php",
+        "destination": "/var/www/html/data/"
+      },
+    {
+        "type": "file",
+        "source": "apache2.conf",
+        "destination": "/etc/supervisor/conf.d/"
+
+    }],
+    "post-processors": [
+        [
+        {
+            "type": "docker-tag",
+            "repository": "{{user `login_server`}}/{{user `repository`}}",
+            "tag": "latest"
+        },
+        {
+            "type": "docker-push",
+            "login_username": "{{user `login_username`}}",
+            "login_password": "{{user `login_password`}}",
+            "login_server": "http://{{user `login_server`}}"
+        }
+        ]
+    ]
+}
