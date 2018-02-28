@@ -75,7 +75,7 @@ function git_clone {
     local readonly repo="$1"
 
     log_info "Cloning $repo"
-    git clone "$repo" "repo"
+    sudo git clone "$repo" "repo"
 }
 
 function packer_build {
