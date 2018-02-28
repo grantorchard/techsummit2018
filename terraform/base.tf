@@ -52,6 +52,12 @@ resource "aws_security_group" "permit-https" {
 	  	protocol = "tcp"
 	  	cidr_blocks = ["0.0.0.0/0"]
   	}
+	egress {
+		from_port = 0
+	  	to_port = 0
+	  	protocol = "-1"
+	  	cidr_blocks = ["0.0.0.0/0"]
+	}
 	tags {
 	    Name = "permit_https"
   	}
@@ -117,9 +123,9 @@ resource "aws_route53_record" "jump" {
 resource "aws_route53_record" "pks" {
    zone_id = "${data.aws_route53_zone.wwko2018.zone_id}"
    name = "pks.wwko2018.com"
-   type = "A"
+   type = "CNAME"
    ttl = "300"
-   records = ["${aws_eip.base.public_ip}"]
+   records = ["${aws_elb.pks.dns_name}"]
 }
 
 resource "aws_elb" "pks" {
