@@ -9,9 +9,9 @@ resources:
       internetFacing: true
       routes:
         - protocol: HTTP
-          port: '8080'
+          port: '80'
           instanceProtocol: HTTP
-          instancePort: '8080'
+          instancePort: '80'
   lychee:
     type: Compute
     properties:
