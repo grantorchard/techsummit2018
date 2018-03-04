@@ -11,7 +11,7 @@ resources:
         - protocol: HTTP
           port: '8080'
           instanceProtocol: HTTP
-          instancePort: '80'
+          instancePort: '8080'
   lychee:
     type: Compute
     properties:
