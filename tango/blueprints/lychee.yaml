@@ -9,7 +9,7 @@ resources:
       internetFacing: true
       routes:
         - protocol: HTTP
-          port: '8081'
+          port: '8080'
           instanceProtocol: HTTP
           instancePort: '80'
   lychee:
