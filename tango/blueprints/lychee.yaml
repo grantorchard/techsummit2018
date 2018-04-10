@@ -1,6 +1,12 @@
+inputs:
+  count:
+    type: integer
+    minimum: 1
+    maximum: 5
+    default: 1
 resources:
   lb-01a:
-    type: Compute.LoadBalancer
+    type: Cloud.LoadBalancer
     properties:
       name: wwko2018
       public-dns: lychee.wwko2018.com
@@ -13,11 +19,11 @@ resources:
           instanceProtocol: HTTP
           instancePort: '80'
   lychee:
-    type: Compute
+    type: Cloud.Machine
     properties:
-      count: 2
+      count: '${input.count}'
       flavor: t2.micro
-      image: ami-055dd07d
+      image: ubuntu
       cloudConfig: |
         #cloud-config
           users:
@@ -29,11 +35,15 @@ resources:
               shell: /bin/bash
       networks:
         - name: '${Network_1.name}'
+      constraints:
+        - tag: grant
+        - tag: us-west-1
+      attachedDisks: []
   mysql:
-    type: Compute
+    type: Cloud.Machine
     properties:
       flavor: t2.micro
-      image: ami-055dd07d
+      image: ubuntu
       cloudConfig: |
         #cloud-config
           users:
@@ -43,11 +53,14 @@ resources:
               sudo: ['ALL=(ALL) NOPASSWD:ALL']
               groups: sudo
               shell: /bin/bash
-              
       networks:
         - name: '${Network_1.name}'
+      constraints:
+        - tag: grant
+        - tag: us-west-1
+      attachedDisks: []
   Network_1:
-    type: Compute.Network
+    type: Cloud.Network
     properties:
-      name: wwko2018
+      name: demo1
       networkType: public
