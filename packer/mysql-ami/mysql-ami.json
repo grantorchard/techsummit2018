@@ -30,8 +30,7 @@
     "provisioners": [{
       "type": "shell",
       "inline": [
-        "sudo DEBIAN_FRONTEND=noninteractive apt-get update -y",  
-        "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server"
+        "sudo DEBIAN_FRONTEND=noninteractive apt-get update -y"
       ]
     }]
   }
