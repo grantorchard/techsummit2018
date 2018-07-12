@@ -32,13 +32,6 @@
       "inline": [
         "sudo DEBIAN_FRONTEND=noninteractive apt-get update -y",  
         "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server",
-        "sudo DEBIAN_FRONTEND=noninteractive mysql -e \"CREATE DATABASE lychee;\"",
-        "sudo DEBIAN_FRONTEND=noninteractive mysql -e \"CREATE USER lychee@'%' IDENTIFIED BY 'lychee';\"",
-        "sudo DEBIAN_FRONTEND=noninteractive mysql -e \"GRANT ALL PRIVILEGES ON lychee.* TO lychee@'%';\"",
-        "sudo DEBIAN_FRONTEND=noninteractive mysql -e \"use lychee; update lychee_settings set \\`value\\`='\\$2a\\$10\\$BFwciy1VogOdcHUarS8rFuUIRPpeVeHQCbUkGpENuvp12QaiIuFlG' where \\`key\\`='username';\"",
-        "sudo DEBIAN_FRONTEND=noninteractive mysql -e \"use lychee; update lychee_settings set \\`value\\`='\\$2a\\$10\\$0qJSCVFni.QVAPkXTvt7seS3E.d4zlWcxxZe05TmLwACpoBu3RJwu' where \\`key\\`='password';\"",
-        "sudo DEBIAN_FRONTEND=noninteractive mysql -e \"FLUSH PRIVILEGES;\"",
-        "sudo sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf"
       ]
     }]
   }
