@@ -32,6 +32,13 @@
       "inline": [
         "sudo DEBIAN_FRONTEND=noninteractive apt-get update -y"
       ]
-    }]
+    }],
+    "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
+  ]
   }
   
